@@ -4,14 +4,16 @@
 To develop a neural network regression model for the given dataset.
 
 ## THEORY
-Explain the problem statement
+The objective of this experiment is to design, implement, and evaluate a Deep Learning–based Neural Network regression model to predict a continuous output variable from a given set of input features. The task is to preprocess the data, construct a neural network regression architecture, train the model using backpropagation and gradient descent, and evaluate its performance using appropriate regression metrics such as Mean Squared Error (MSE), Mean Absolute Error (MAE), and R² score.
+
 
 ## Neural Network Model
 Include the neural network model diagram.
+<img width="1536" height="826" alt="nn" src="https://github.com/user-attachments/assets/96a4b486-9bf4-44df-968b-16c3db5c0360" />
+
 
 ## DESIGN STEPS
 ### STEP 1: 
-
 Create your dataset in a Google sheet with one numeric input and one numeric output.
 
 ### STEP 2: 
@@ -44,37 +46,69 @@ Use the trained model to predict  for a new input value .
 
 ## PROGRAM
 
-### Name:
 
-### Register Number:
+### Name:SHARVESHWARAN SS
 
-```python
+### Register Number:212224220096
+
+```
 class NeuralNet(nn.Module):
     def __init__(self):
         super().__init__()
-        #Include your code here
+        self.fc1=nn.Linear(1,8)
+        self.fc2=nn.Linear(8,10)
+        self.fc3=nn.Linear(10,1)
+        self.relu=nn.ReLU()
+        self.history={'loss':[]}
+    def forward(self,x):
+        x=self.relu(self.fc1(x))
+        x=self.relu(self.fc2(x))
+        x=self.fc3(x)
+        return x
 
 
 
 # Initialize the Model, Loss Function, and Optimizer
+ai_brain=NeuralNet()
+criterion=nn.MSELoss()
+optimizer=optim.RMSprop(ai_brain.parameters(),lr=0.001)
+
 
 
 
 def train_model(ai_brain, X_train, y_train, criterion, optimizer, epochs=2000):
-    #Include your code here
+    for epoch in range(epochs):
+      optimizer.zero_grad()
+      Loss=criterion(ai_brain(X_train),y_train)
+      Loss.backward()
+      optimizer.step()
+      ai_brain.history['loss'].append(Loss.item())
+      if epoch % 200 == 0:
+        print(f'Epoch [{epoch}/{epochs}], Loss: {Loss.item():.6f}')
+
+
 
 ```
 
 ### Dataset Information
 Include screenshot of the generated data
+<img width="159" height="142" alt="image" src="https://github.com/user-attachments/assets/0fa8fab5-a78d-4a68-bfaf-a3651c25070e" />
+
 
 ### OUTPUT
+<img width="375" height="221" alt="image" src="https://github.com/user-attachments/assets/39e514ea-e199-45c8-96cf-e09c219a086d" />
+
+<img width="216" height="33" alt="image" src="https://github.com/user-attachments/assets/b7518663-d4f2-4d0f-b988-8ccc8aeef845" />
 
 ### Training Loss Vs Iteration Plot
 Include your plot here
+<img width="721" height="559" alt="image" src="https://github.com/user-attachments/assets/b5febbe6-805a-40e0-83c3-68f27198e23c" />
 
 ### New Sample Data Prediction
 Include your sample input and output here
+<img width="300" height="25" alt="image" src="https://github.com/user-attachments/assets/d4be3069-84fa-47e5-b105-ba9e4dc88132" />
+
+
 
 ## RESULT
 Thus, a neural network regression model was successfully developed and trained using PyTorch.
